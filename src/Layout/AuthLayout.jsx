@@ -5,7 +5,7 @@ import Footer from "../Components/Shared/Footer";
 
 const AuthLayout = () => {
   return (
-    <div>
+    <div className="grid-bg">
       <Navbar />
       <Outlet />
       <Footer />

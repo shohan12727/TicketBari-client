@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
 import Navbar from "../Components/Shared/Navbar";
+import Footer from "../Components/Shared/Footer";
 
 const Root = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <Outlet></Outlet>
-      </div>
+      <Outlet></Outlet>
+      <Footer />
     </>
   );
 };
