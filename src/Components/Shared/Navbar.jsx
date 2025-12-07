@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo - Left Side */}
-          <Link to="/" >
+          <Link to="/">
             <div className="flex items-center space-x-2">
               <Ticket className="w-8 h-8 text-white" />
               <span className="text-white text-2xl font-bold">
@@ -24,15 +24,21 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation - Center */}
-          
+
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink to='/' className="text-white hover:underline font-bold">
-             Home
+            <NavLink to="/" className="text-white hover:underline font-bold">
+              Home
             </NavLink>
-            <NavLink to='/all-tickets' className="text-white hover:underline font-bold">
+            <NavLink
+              to="/all-tickets"
+              className="text-white hover:underline font-bold"
+            >
               All Tickets
             </NavLink>
-            <NavLink to='/dashboard' className="text-white hover:underline font-bold">
+            <NavLink
+              to="/dashboard"
+              className="text-white hover:underline font-bold"
+            >
               Dashboard
             </NavLink>
           </div>
@@ -50,10 +56,7 @@ const Navbar = () => {
 
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded font-bold text-primary shadow-2xl py-2 z-50">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 "
-                  >
+                  <a href="#" className="block px-4 py-2 ">
                     My Profile
                   </a>
                 </div>
@@ -90,13 +93,13 @@ const Navbar = () => {
         <div className="md:hidden bg-primary">
           <div className="px-4 pt-2 pb-4 space-y-2">
             <Link
-              to='/all-tickets'
+              to="/all-tickets"
               className="block px-3 py-2  text-white hover:bg-[#A3070C] font-bold"
             >
               All Tickets
             </Link>
             <Link
-              to='/dashboard'
+              to="/dashboard"
               className="block px-3 py-2 text-white hover:bg-[#A3070C] font-bold"
             >
               Dashboard
