@@ -8,14 +8,14 @@
   name: "light";
   default: true;
   --color-primary: #e30b13;
-  --color-secondary: teal;
+  --color-secondary: #A3070C;
 }
 
 * {
   font-family: "Nunito", sans-serif;
 }
 
-/* grid bg  */
+/* grid background  */
 .grid-bg {
   background-size: 40px 40px;
   background-image: linear-gradient(
@@ -24,4 +24,8 @@
       transparent 1px
     ),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+}
+
+.active {
+  text-decoration: underline;
 }

@@ -1,11 +1,15 @@
-import React from 'react';
+import { Outlet } from "react-router";
+import Navbar from "../Components/Shared/Navbar";
 
 const Root = () => {
-    return (
-        <div>
-            <h2>this is root</h2>
-        </div>
-    );
+  return (
+    <>
+      <Navbar />
+      <div>
+        <Outlet></Outlet>
+      </div>
+    </>
+  );
 };
 
 export default Root;
