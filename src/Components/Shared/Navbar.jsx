@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, X, Ticket, User } from "lucide-react";
 import { Link, NavLink } from "react-router";
 
@@ -8,6 +8,7 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <nav className="bg-primary shadow-lg">
@@ -64,20 +65,21 @@ const Navbar = () => {
             </div>
 
             {/* Login & Sign Up Buttons */}
-            <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
-              Login
-            </button>
-            <button className="px-4 py-2 bg-white text-primary rounded-lg hover:scale-105 transition  font-bold shadow-md">
-              Sign Up
-            </button>
+            <Link to="/login">
+              <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
+                Login
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="px-4 py-2 bg-white text-primary rounded-lg hover:scale-105 transition  font-bold shadow-md">
+                Sign Up
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Hamburger Menu */}
           <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-white hover:text-indigo-200 transition-colors duration-200"
-            >
+            <button onClick={toggleMenu} className="text-white">
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
               ) : (
@@ -93,31 +95,43 @@ const Navbar = () => {
         <div className="md:hidden bg-primary">
           <div className="px-4 pt-2 pb-4 space-y-2">
             <Link
+              to="/"
+              className="block px-3 py-2  text-white hover:bg-[#A3070C] font-bold"
+              onClick={closeMenu}
+            >
+              Home
+            </Link>
+            <Link
               to="/all-tickets"
+              onClick={closeMenu}
               className="block px-3 py-2  text-white hover:bg-[#A3070C] font-bold"
             >
               All Tickets
             </Link>
             <Link
               to="/dashboard"
+              onClick={closeMenu}
               className="block px-3 py-2 text-white hover:bg-[#A3070C] font-bold"
             >
               Dashboard
             </Link>
-            <a
-              href="#"
+            <Link
+              to="login"
+              onClick={closeMenu}
               className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C]  transition-colors duration-200 font-medium"
             >
               Login
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="register"
+              onClick={closeMenu}
               className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C] transition-colors duration-200 font-medium"
             >
               Register
-            </a>
+            </Link>
             <a
               href="#"
+              onClick={closeMenu}
               className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C] transition-colors duration-200 font-medium"
             >
               My Profile

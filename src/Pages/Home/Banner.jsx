@@ -20,7 +20,7 @@ const Banner = () => {
       //   emulateTouch={true}
     >
       {images.map((img, index) => (
-        <div key={index} className="h-[550px]">
+        <div key={index} className="md:h-[550px] h-full">
           <img
             src={img}
             className="h-full w-full object-cover"

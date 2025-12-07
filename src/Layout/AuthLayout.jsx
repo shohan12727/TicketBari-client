@@ -1,11 +1,16 @@
-import React from 'react';
+import React from "react";
+import Navbar from "../Components/Shared/Navbar";
+import { Outlet } from "react-router";
+import Footer from "../Components/Shared/Footer";
 
 const AuthLayout = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </div>
+  );
 };
 
 export default AuthLayout;
