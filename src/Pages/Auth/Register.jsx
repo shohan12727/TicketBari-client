@@ -22,10 +22,10 @@ const Register = () => {
   const handleRegister = async (data) => {
     const { name, image, email, password } = data;
     const imageFile = image[0];
-   
 
     try {
       const imageURL = await imageUpload(imageFile);
+      // console.log(imageURL)
 
       //1. User Registration
       const result = await createUser(email, password);
@@ -71,7 +71,7 @@ const Register = () => {
                   {/* Name  */}
                   <label className="label mb-1">Name</label>
                   <input
-                    {...register("name", { required: true, maxLength: 20 })}
+                    {...register("name", { required: true, maxLength: 40 })}
                     type="text"
                     className="input w-full"
                     placeholder="Name"
@@ -80,7 +80,7 @@ const Register = () => {
                     <p className="text-red-500 text-sm mt-1">
                       {errors.name.type === "required" && "Name is required."}
                       {errors.name.type === "maxLength" &&
-                        "Name cannot exceed 20 characters."}
+                        "Name cannot exceed 40 characters."}
                     </p>
                   )}
                 </div>
@@ -91,8 +91,6 @@ const Register = () => {
                   </label>
                   <input
                     type="file"
-                    id="image"
-                    accept="image/*"
                     className="block w-full text-sm text-gray-500 input
        file:text-white file:py-1 file:px-2 file:font-bold  file:bg-primary file:rounded-md
        rounded-md cursor-pointer

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { Menu, X, Ticket, User } from "lucide-react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user } = use(AuthContext);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -50,9 +52,18 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-primary "
+                className="flex items-center justify-center w-10 h-10 hover:${} rounded-full bg-white text-primary "
               >
-                <User className="w-6 h-6" />
+                <div className="relative group">
+                  <img
+                    src={user?.photoURL}
+                    alt="Avatar"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <span className="absolute  mt-2 -top-3 right-10 hidden group-hover:block bg-white text-black px-2 py-1 rounded">
+                    {user?.displayName}
+                  </span>
+                </div>
               </button>
 
               {isDropdownOpen && (

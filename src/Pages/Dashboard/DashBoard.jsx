@@ -3,11 +3,11 @@ import {
   Menu,
   X,
   Home,
-  BarChart2,
   Users,
   Settings,
   FileText,
   Bell,
+  Ticket 
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   const menuItems = [
     { icon: Home, label: "Dashboard", active: true },
-    { icon: BarChart2, label: "Analytics" },
+    { icon: Ticket, label: "Add Ticket" },
     { icon: Users, label: "Users" },
     { icon: FileText, label: "Reports" },
     { icon: Bell, label: "Notifications" },
