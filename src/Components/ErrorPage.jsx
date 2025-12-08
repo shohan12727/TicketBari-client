@@ -1,9 +1,10 @@
 import errorImg from "../assets/Banner/errorImg.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Navbar from "./Shared/Navbar";
 import Footer from "./Shared/Footer";
 
 const ErrorPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <Navbar></Navbar>
@@ -20,9 +21,12 @@ const ErrorPage = () => {
           The page you are looking for is not available.
         </p>
         <div className="flex justify-center items-center my-5">
-          <Link to="/" className="btn text-white bg-primary">
+          <button
+            onClick={() => navigate(-1)}
+            className="btn text-white bg-primary"
+          >
             Go Back!
-          </Link>
+          </button>
         </div>
       </div>
       <Footer></Footer>

@@ -3,46 +3,46 @@ import { use, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import { imageUpload } from "../../Utilities/imagebb";
 
 const Register = () => {
-  const { createUser, setUser, signInWithGoogle, userUpdate } = use(AuthContext);
+  const { createUser, setUser, signInWithGoogle, updateUserProfile } =
+    use(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    const photo = e.target.photo.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    // createUser hosche eikhane
+  // react hook form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    if (!passwordRegex.test(password)) {
-      toast.error(
-        "Password must be at least 6 characters long and include both uppercase and lowercase letters."
-      );
-      return;
+  const handleRegister = async (data) => {
+    const { name, image, email, password } = data;
+    const imageFile = image[0];
+   
+
+    try {
+      const imageURL = await imageUpload(imageFile);
+
+      //1. User Registration
+      const result = await createUser(email, password);
+
+      // 2. Generate image url from selected file
+
+      //3. Save username & profile photo
+      await updateUserProfile(name, imageURL);
+
+      navigate("/");
+      toast.success("Signup Successful");
+
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message);
     }
-
-    createUser(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        userUpdate({ displayName: name, photoURL: photo })
-          .then(() => {
-            setUser({ ...user, displayName: name, photoURL: photo });
-            toast.success("Account created successfully!");
-            e.target.reset();
-            navigate("/");
-          })
-          .catch((error) => {
-            toast.error(error.message);
-          });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        toast.error(errorMessage);
-      });
   };
 
   const handleSignInWithGoogle = () => {
@@ -65,50 +65,79 @@ const Register = () => {
         <div className="card w-full max-w-md mx-auto  p-2">
           <h2 className="text-2xl font-bold text-center">Register Now</h2>
           <div className="card-body">
-            <form onSubmit={handleRegister}>
+            <form onSubmit={handleSubmit(handleRegister)}>
               <fieldset className="space-y-4">
                 <div>
                   {/* Name  */}
                   <label className="label mb-1">Name</label>
                   <input
-                    name="name"
+                    {...register("name", { required: true, maxLength: 20 })}
                     type="text"
                     className="input w-full"
                     placeholder="Name"
-                    required
                   />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.name.type === "required" && "Name is required."}
+                      {errors.name.type === "maxLength" &&
+                        "Name cannot exceed 20 characters."}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  {/* Photo-URL  */}
-                  <label className="label mb-1">Photo-URL</label>
+                  {/* image  */}
+                  <label htmlFor="image" className="label mb-2">
+                    Profile Image
+                  </label>
                   <input
-                    name="photo"
-                    type="text"
-                    className="input w-full"
-                    placeholder="Photo-URL"
-                    required
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                    className="block w-full text-sm text-gray-500 input
+       file:text-white file:py-1 file:px-2 file:font-bold  file:bg-primary file:rounded-md
+       rounded-md cursor-pointer
+      focus:outline-none focus:ring-2 
+      py-2"
+                    {...register("image", { required: "Image is required." })}
                   />
-                </div>
-                <div>
+                  <p className="mt-1 text-xs text-gray-400">
+                    PNG, JPG or JPEG (max 2MB)
+                  </p>
+                  {errors.image && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.image.message}
+                    </p>
+                  )}
+
                   {/* email  */}
-                  <label className="label mb-1">Email</label>
+                  <label className="label mb-1 mt-2">Email</label>
                   <input
-                    name="email"
+                    {...register("email", { required: "Email is required." })}
                     type="email"
                     className="input w-full"
                     placeholder="Email"
-                    required
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 {/* password */}
                 <div className="relative">
                   <label className="label mb-1">Password</label>
                   <input
-                    name="password"
+                    {...register("password", {
+                      required: "Password is required.",
+                      pattern: {
+                        value: /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/,
+                        message:
+                          "Password must include uppercase, lowercase, and be at least 6 characters long.",
+                      },
+                    })}
                     type={showPassword ? "text" : "password"}
                     className="input w-full focus:outline-none focus:ring-0"
                     placeholder="Password"
-                    required
                   />
                   <button
                     type="button"
@@ -124,7 +153,15 @@ const Register = () => {
                     )}
                   </button>
                 </div>
-                <button type="submit" className="btn btn-neutral w-full">
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className="btn btn-primary text-white w-full"
+                >
                   Register
                 </button>
               </fieldset>
