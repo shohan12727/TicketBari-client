@@ -6,11 +6,13 @@ import DashBoard from "../Pages/Dashboard/DashBoard";
 import AuthLayout from "../Layout/AuthLayout";
 import Register from "../Pages/Auth/Register";
 import Login from "../Pages/Auth/Login";
+import ErrorPage from "../Components/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
