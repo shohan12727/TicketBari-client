@@ -9,7 +9,6 @@ const DashboardLayout = () => {
       {/* Right Side: Dashboard Dynamic Content */}
       <div className="flex-1  md:ml-64">
         <div className="p-5">
-                <h2>  this is home page</h2>
 
           {/* Outlet for dynamic contents */}
           <Outlet />
