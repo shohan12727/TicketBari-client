@@ -8,6 +8,8 @@ import Login from "../Pages/Auth/Login";
 import ErrorPage from "../Components/ErrorPage";
 import DashboardLayout from "../Layout/DashBoardLayout";
 import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
+import UserProfile from "../Pages/Dashboard/User/UserProfile";
+import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/my-tickets",
         element: <MyBookedTickets />,
+      },
+      {
+        path: "/dashboard/user-profile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "/dashboard/transaction-history",
+        element: <TransactionHistory />,
       },
     ],
   },

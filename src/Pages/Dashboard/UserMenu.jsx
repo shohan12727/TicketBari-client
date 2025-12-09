@@ -16,7 +16,7 @@ const UserMenu = () => {
         }
       >
         <FaUser className="w-5 h-5" />
-        <span className="mx-4 font-medium">User Profile</span>
+        <span className="mx-4 font-medium">Profile</span>
       </NavLink>
 
       {/* My Booked Tickets */}
