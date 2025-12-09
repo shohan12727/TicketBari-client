@@ -2,17 +2,18 @@ import { createBrowserRouter } from "react-router";
 import Root from "../Layout/Root";
 import Home from "../Pages/Home/Home";
 import AllTickets from "../Pages/AllTickets/AllTickets";
-import DashBoard from "../Pages/Dashboard/DashBoard";
 import AuthLayout from "../Layout/AuthLayout";
 import Register from "../Pages/Auth/Register";
 import Login from "../Pages/Auth/Login";
 import ErrorPage from "../Components/ErrorPage";
+import DashboardLayout from "../Layout/DashBoardLayout";
+import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -40,6 +41,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: DashBoard,
+    Component: DashboardLayout,
+    children: [
+      {
+        path: "/dashboard/my-tickets",
+        element: <MyBookedTickets />,
+      },
+    ],
   },
 ]);
