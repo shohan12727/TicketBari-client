@@ -3,7 +3,7 @@ import { FaUser, FaTicketAlt, FaUsers, FaBullhorn } from "react-icons/fa";
 
 const AdminMenu = () => {
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 mt-2">
       {/* Admin Profile */}
       <NavLink
         to="/dashboard/admin-profile"

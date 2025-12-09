@@ -10,6 +10,15 @@ import DashboardLayout from "../Layout/DashBoardLayout";
 import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
 import UserProfile from "../Pages/Dashboard/User/UserProfile";
 import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
+import VendorProfile from "../Pages/Dashboard/Vendor/VendorProfile";
+import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
+import MyAddedTicket from "../Pages/Dashboard/Vendor/MyAddedTicket";
+import RequestBooking from "../Pages/Dashboard/Vendor/RequestBooking";
+import RevenueOverView from "../Pages/Dashboard/Vendor/RevenueOverView";
+import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
+import ManageTicket from "../Pages/Dashboard/Admin/ManageTicket";
+import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
+import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +65,42 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/transaction-history",
         element: <TransactionHistory />,
+      },
+      {
+        path: "/dashboard/vendor-profile",
+        element: <VendorProfile />,
+      },
+      {
+        path: "/dashboard/add-ticket",
+        element: <AddTicket />,
+      },
+      {
+        path: "/dashboard/my-added-tickets",
+        element: <MyAddedTicket />,
+      },
+      {
+        path: "/dashboard/requested-bookings",
+        element: <RequestBooking />,
+      },
+      {
+        path: "/dashboard/revenue-overview",
+        element: <RevenueOverView />,
+      },
+      {
+        path: "/dashboard/admin-profile",
+        element: <AdminProfile />,
+      },
+      {
+        path: "/dashboard/manage-tickets",
+        element: <ManageTicket />,
+      },
+      {
+        path: "/dashboard/manage-users",
+        element: <ManageUser />,
+      },
+      {
+        path: "/dashboard/advertise-tickets",
+        element: <AdvertiseTicket />,
       },
     ],
   },

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
-// Icons
 import { GrLogout } from "react-icons/gr";
-import { AiOutlineBars } from "react-icons/ai";
+import { AiOutlineBars, AiOutlineClose  } from "react-icons/ai";
 import UserMenu from "./UserMenu";
 import VendorMenu from "./VendorMenu";
 import AdminMenu from "./AdminMenu";
@@ -13,37 +12,46 @@ import { Ticket } from "lucide-react";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
+//   const [isActive, setActive] = useState(true);
   const [isActive, setActive] = useState(false);
 
+
   // Sidebar Responsive Handler
-  const handleToggle = () => {
-    setActive(!isActive);
+   const handleToggle = () => {
+    setActive((prev) => !prev);
   };
 
   return (
     <>
       {/* Small Screen Navbar, only visible till md breakpoint */}
-      <div className="bg-primary text-white flex items-center justify-between px-4 py-3 md:hidden">
-        <div>
-          <div className="cursor-pointer font-bold">
-            <Link to="/">
-              {/* logo  */}
-              <div className="flex items-center space-x-2">
-                <Ticket className="w-7 h-7 text-white" />
-                <span className="text-white text-xl font-bold whitespace-nowrap">
-                  Ticket<span className="text-[#FFD700]">Bari</span>
-                </span>
-              </div>
-            </Link>
+
+
+ <div className="bg-primary text-white flex items-center justify-between px-4 py-3 md:hidden">
+      {/* Logo */}
+      <div className="cursor-pointer font-bold">
+        <Link to="/">
+          <div className="flex items-center space-x-2">
+            <Ticket className="w-7 h-7 text-white" />
+            <span className="text-white text-xl font-bold whitespace-nowrap">
+              Ticket<span className="text-[#FFD700]">Bari</span>
+            </span>
           </div>
-        </div>
-        <button
-          onClick={handleToggle}
-          className="p-2 focus:outline-none focus:bg-[#c10a11] rounded-md"
-        >
-          <AiOutlineBars className="h-6 w-6 text-white" />
-        </button>
+        </Link>
       </div>
+
+      {/* Hamburger / Close Icon */}
+      <button
+        onClick={handleToggle}
+        className="p-2 focus:outline-none focus:bg-[#c10a11] rounded-md"
+      >
+        {isActive ? (
+          <AiOutlineClose className="h-6 w-6 text-white" />
+        ) : (
+          <AiOutlineBars className="h-6 w-6 text-white" />
+        )}
+      </button>
+    </div>
+
 
       {/* Sidebar */}
       <div
