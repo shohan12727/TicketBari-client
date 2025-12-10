@@ -91,6 +91,7 @@ const AllTicketsDetails = () => {
         bookingQuantity,
         toLocation,
         fromLocation,
+        departureDateTime,
       };
       const response = await axiosSecure.post("/booking-tickets", bookingData);
 

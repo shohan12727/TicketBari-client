@@ -83,7 +83,6 @@ export default function TicketForm() {
         quantity,
         price,
         perks,
-
         departureDateTime,
         imageURL,
       };

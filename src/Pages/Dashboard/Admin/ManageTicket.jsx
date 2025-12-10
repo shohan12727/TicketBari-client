@@ -6,7 +6,6 @@ import LoadingSpinner from "../../../Components/LoadingSpinner";
 
 const ManageTicket = () => {
   const axiosSecure = useAxiosSecure();
-
   const {
     data: allTickets = [],
     refetch,
