@@ -2,6 +2,7 @@ import React from "react";
 import useAxiosSecure from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import { Link } from "react-router";
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,7 +15,6 @@ const AllTickets = () => {
     },
   });
 
-  console.log(approvedTickets);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -133,20 +133,11 @@ const AllTickets = () => {
                 </div>
 
                 {/* See Details Button */}
-                <button
-                  className="w-full py-2 rounded-lg font-semibold text-sm text-white transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    backgroundColor: "#e30b13",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.target.style.backgroundColor = "#A3070C")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.target.style.backgroundColor = "#e30b13")
-                  }
-                >
-                  See Details
-                </button>
+                <Link to = {`/all-tickets-details/${ticket._id}`} >
+                  <button className="w-full py-2 rounded-lg font-semibold text-sm text-white bg-[#e30b13] hover:bg-[#A3070C] transition-all duration-300 hover:shadow-lg">
+                    See Details
+                  </button>
+                </Link>
               </div>
             </div>
           ))}

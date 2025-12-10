@@ -60,7 +60,7 @@ export default function TicketForm() {
       quantity,
       price,
       perks,
-      imagefromLocation,
+      
       departureDateTime,
       image,
     } = data;
@@ -83,7 +83,7 @@ export default function TicketForm() {
         quantity,
         price,
         perks,
-        imagefromLocation,
+       
         departureDateTime,
         imageURL,
       };
