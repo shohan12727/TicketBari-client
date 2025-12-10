@@ -2,7 +2,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { imageUpload } from "../../../Utilities/imagebb";
 import useAuth from "../../../Hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxios";
+import Swal from "sweetalert2";
 
 const bangladeshiDivisions = [
   "Dhaka",
@@ -19,6 +21,9 @@ const availablePerks = ["AC", "Breakfast", "WiFi", "Lunch", "Dinner", "Snacks"];
 
 export default function TicketForm() {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -59,19 +64,56 @@ export default function TicketForm() {
       departureDateTime,
       image,
     } = data;
-    const imageFile = image[0];
-    try {
-      const imageURL = await imageUpload(imageFile);
-      console.log(imageURL, departureDateTime);
 
-      toast.success("Ticket added Successfully");
+    const imageFile = image[0];
+
+    try {
+      setIsSubmitting(true);
+      // 1. Upload image and get URL
+      const imageURL = await imageUpload(imageFile);
+
+      // 2. Prepare ticket object with image URL
+      const ticketData = {
+        vendorName,
+        vendorEmail,
+        transportType,
+        toLocation,
+        ticketTitle,
+        quantity,
+        price,
+        perks,
+        imagefromLocation,
+        departureDateTime,
+        imageURL,
+      };
+
+      // 3. POST data using axiosSecure
+      const response = await axiosSecure.post("/tickets", ticketData);
+
+      if (response?.data?.acknowledged) {
+        // toast.success("Ticket added Successfully");
+        Swal.fire({
+          title: "Ticket added Successfully",
+          icon: "success",
+          draggable: true,
+        }); 
+        reset();
+      } else {
+        // toast.error("Failed to add ticket");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+
+      console.log(response.data);
     } catch (err) {
       console.log(err);
-      toast.error(err?.message);
+      toast.error(err?.message || "Something went wrong");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    console.log("clicked");
-    reset();
   };
 
   return (
@@ -84,6 +126,32 @@ export default function TicketForm() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Vendor Name (readonly) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Vendor Name
+                </label>
+                <input
+                  type="text"
+                  {...register("vendorName")}
+                  readOnly
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
+                />
+              </div>
+
+              {/* Vendor Email (readonly) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Vendor Email
+                </label>
+                <input
+                  type="email"
+                  {...register("vendorEmail")}
+                  readOnly
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
+                />
+              </div>
+
               {/* Ticket Title */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -295,41 +363,20 @@ export default function TicketForm() {
                   {errors.image.message}
                 </p>
               )}
-
-              {/* Vendor Name (readonly) */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Vendor Name
-                </label>
-                <input
-                  type="text"
-                  {...register("vendorName")}
-                  readOnly
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
-                />
-              </div>
-
-              {/* Vendor Email (readonly) */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Vendor Email
-                </label>
-                <input
-                  type="email"
-                  {...register("vendorEmail")}
-                  readOnly
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
-                />
-              </div>
             </div>
 
             {/* Submit Button */}
             <div className="flex justify-end pt-4">
               <button
                 type="submit"
-                className="px-8 py-3 bg-[#e30b13] hover:bg-[#A3070C] text-white font-semibold rounded-lg transition duration-200 shadow-md hover:shadow-lg"
+                disabled={isSubmitting}
+                className={`px-8 py-3 ${
+                  isSubmitting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#e30b13] hover:bg-[#A3070C]"
+                } text-white font-semibold rounded-lg transition duration-200 shadow-md hover:shadow-lg`}
               >
-                Add Ticket
+                {isSubmitting ? "Submitting..." : "Add Ticket"}
               </button>
             </div>
           </form>
