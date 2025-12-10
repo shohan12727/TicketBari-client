@@ -60,7 +60,7 @@ export default function TicketForm() {
       quantity,
       price,
       perks,
-      
+
       departureDateTime,
       image,
     } = data;
@@ -83,7 +83,7 @@ export default function TicketForm() {
         quantity,
         price,
         perks,
-       
+
         departureDateTime,
         imageURL,
       };
@@ -97,7 +97,7 @@ export default function TicketForm() {
           title: "Ticket added Successfully",
           icon: "success",
           draggable: true,
-        }); 
+        });
         reset();
       } else {
         // toast.error("Failed to add ticket");
@@ -108,9 +108,8 @@ export default function TicketForm() {
         });
       }
 
-      console.log(response.data);
+      // console.log(response.data);
     } catch (err) {
-      console.log(err);
       toast.error(err?.message || "Something went wrong");
     } finally {
       setIsSubmitting(false);
