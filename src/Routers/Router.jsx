@@ -19,6 +19,7 @@ import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
 import ManageTicket from "../Pages/Dashboard/Admin/ManageTicket";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
+import AllTicketsDetails from "../Pages/AllTickets/AllTicketsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "/all-tickets",
         Component: AllTickets,
+      },
+      {
+        path: "/all-tickets-details",
+        element: AllTicketsDetails,
       },
     ],
   },

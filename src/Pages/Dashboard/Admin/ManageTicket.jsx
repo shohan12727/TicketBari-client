@@ -77,6 +77,7 @@ const ManageTicket = () => {
     return <LoadingSpinner />;
   }
 
+  //   /text
   return (
     <div className="md:p-6 p-0">
       <h2 className="text-2xl font-semibold mb-6">

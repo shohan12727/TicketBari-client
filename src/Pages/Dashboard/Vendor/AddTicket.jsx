@@ -78,6 +78,7 @@ export default function TicketForm() {
         vendorEmail,
         transportType,
         toLocation,
+        fromLocation,
         ticketTitle,
         quantity,
         price,
