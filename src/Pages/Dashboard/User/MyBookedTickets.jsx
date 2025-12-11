@@ -18,8 +18,6 @@ const MyBookedTickets = () => {
     },
   });
 
-  console.log(bookedTickets);
-
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -127,8 +125,8 @@ const TicketCard = ({ ticket }) => {
         className={`inline-block px-3 py-1 rounded-full text-white text-sm mt-2 ${
           status === "pending"
             ? "bg-yellow-500"
-            : status === "accepted"
-            ? "bg-[#e30b13]" // primary
+            : status === "Accept"
+            ? "bg-green-600" 
             : status === "paid"
             ? "bg-green-600"
             : "bg-red-600"
@@ -138,7 +136,7 @@ const TicketCard = ({ ticket }) => {
       </span>
 
       {/* COUNTDOWN */}
-      {status !== "rejected" && !isExpired && (
+      {status !== "Reject" && !isExpired && (
         <p className="mt-2 font-bold ">
           Countdown: <span className="text-[#e30b13]">{countdown}</span>
         </p>
