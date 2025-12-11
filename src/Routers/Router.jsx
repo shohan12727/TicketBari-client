@@ -21,6 +21,7 @@ import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
 import AllTicketsDetails from "../Pages/AllTickets/AllTicketsDetails";
 import PrivateRoute from "./PrivateRoute";
+import SuccessUrl from "../Pages/Dashboard/Payment/SuccessUrl";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/advertise-tickets",
         element: <AdvertiseTicket />,
+      },
+      {
+        path: "/dashboard/success-payment",
+        element: <SuccessUrl />,
       },
     ],
   },

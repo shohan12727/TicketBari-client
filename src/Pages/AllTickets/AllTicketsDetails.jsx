@@ -38,6 +38,7 @@ const AllTicketsDetails = () => {
   } = useForm({ defaultValues: { bookingQuantity: 1 } });
 
   const {
+    _id,
     transportType,
     toLocation,
     fromLocation,

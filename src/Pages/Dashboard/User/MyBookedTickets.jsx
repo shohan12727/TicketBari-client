@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
+import useAuth from "../../../Hooks/useAuth";
 
 const MyBookedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -9,7 +10,7 @@ const MyBookedTickets = () => {
   const {
     data: bookedTickets = [],
     isLoading,
-    refetch,
+    refetch, // paid status === 'paid' refetch hobe
   } = useQuery({
     queryKey: ["booked-tickets"],
     queryFn: async () => {
@@ -21,7 +22,7 @@ const MyBookedTickets = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="p-4">
+    <div className="md:p-4">
       <h2 className="text-3xl font-semibold mb-4">My Booked Tickets</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -33,12 +34,12 @@ const MyBookedTickets = () => {
   );
 };
 
-export default MyBookedTickets;
+// -----------------------------------------
 
-// --------------------------------------------------
-// SEPARATE COMPONENT → Fixes hook order error
-// --------------------------------------------------
 const TicketCard = ({ ticket }) => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
   const {
     ticketTitle,
     imageURL,
@@ -50,6 +51,25 @@ const TicketCard = ({ ticket }) => {
     status,
   } = ticket;
 
+  const handlePayment = async (id) => {
+    const paymentInfo = {
+      id,
+      paymentTitle: ticketTitle,
+      paymentPrice: Number(price),
+      paymentQuantity: Number(bookingQuantity),
+      userName: user?.displayName,
+      userEmail: user?.email,
+    };
+
+    const response = await axiosSecure.post(
+      "/create-checkout-session",
+      paymentInfo
+    );
+    if (response?.data?.acknowledged) {
+      alert("you are good to go");
+    }
+  };
+
   // Parse the ISO datetime string
   const departure = new Date(departureDateTime);
   const now = new Date();
@@ -59,7 +79,7 @@ const TicketCard = ({ ticket }) => {
 
   // PURE JS COUNTDOWN TIMER
   useEffect(() => {
-    if (status === "rejected" || isExpired) return;
+    if (status === "Reject" || isExpired) return;
 
     const interval = setInterval(() => {
       const now = new Date();
@@ -125,8 +145,8 @@ const TicketCard = ({ ticket }) => {
         className={`inline-block px-3 py-1 rounded-full text-white text-sm mt-2 ${
           status === "pending"
             ? "bg-yellow-500"
-            : status === "Accept"
-            ? "bg-green-600" 
+            : status === "accepted"
+            ? "bg-green-600"
             : status === "paid"
             ? "bg-green-600"
             : "bg-red-600"
@@ -136,7 +156,7 @@ const TicketCard = ({ ticket }) => {
       </span>
 
       {/* COUNTDOWN */}
-      {status !== "Reject" && !isExpired && (
+      {status !== "rejected" && !isExpired && (
         <p className="mt-2 font-bold ">
           Countdown: <span className="text-[#e30b13]">{countdown}</span>
         </p>
@@ -151,7 +171,8 @@ const TicketCard = ({ ticket }) => {
       {status === "accepted" && !isExpired && (
         <button
           class="w-full mt-3 text-white py-2 rounded-lg transition 
-         bg-primary hover:bg-secondary"
+         bg-green-600 hover:bg-green-800"
+          onClick={() => handlePayment(ticket._id)}
         >
           Pay Now
         </button>
@@ -159,3 +180,5 @@ const TicketCard = ({ ticket }) => {
     </div>
   );
 };
+
+export default MyBookedTickets;
