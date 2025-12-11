@@ -51,7 +51,8 @@ const TicketCard = ({ ticket }) => {
     status,
   } = ticket;
 
-  const handlePayment = async (id) => {
+const handlePayment = async (id) => {
+  try {
     const paymentInfo = {
       id,
       paymentTitle: ticketTitle,
@@ -65,10 +66,23 @@ const TicketCard = ({ ticket }) => {
       "/create-checkout-session",
       paymentInfo
     );
-    if (response?.data?.acknowledged) {
-      alert("you are good to go");
+
+    // Stripe API returns { url: "https://checkout.stripe.com/..." }
+    const checkoutUrl = response?.data?.url;
+
+    if (checkoutUrl) {
+      // Redirect user to Stripe Checkout
+      window.location.href = checkoutUrl;
+    } else {
+      alert("Unable to start payment. Please try again.");
     }
-  };
+
+  } catch (error) {
+    console.error("Payment error:", error);
+    alert("Payment initialization failed.");
+  }
+};
+
 
   // Parse the ISO datetime string
   const departure = new Date(departureDateTime);
