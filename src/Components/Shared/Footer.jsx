@@ -40,7 +40,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                //   href="/contact"
+                  to="/contact"
                   className="text-sm hover:text-white transition-colors"
                 >
                   Contact Us
@@ -48,7 +48,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                //   href="/about"
+                  to="/about"
                   className="text-sm hover:text-white transition-colors"
                 >
                   About

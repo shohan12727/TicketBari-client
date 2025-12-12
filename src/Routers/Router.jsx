@@ -20,19 +20,21 @@ import ManageTicket from "../Pages/Dashboard/Admin/ManageTicket";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
 import AllTicketsDetails from "../Pages/AllTickets/AllTicketsDetails";
-import PrivateRoute from "./PrivateRoute"
+import PrivateRoute from "./PrivateRoute";
 import SuccessUrl from "../Pages/Dashboard/Payment/SuccessUrl";
 import CancelUrl from "../Pages/Dashboard/Payment/CancelUrl";
+import Contact from "../Components/Contact";
+import About from "../Components/About";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Root,
+    element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Home />,
       },
       {
         path: "/all-tickets",
@@ -46,25 +48,33 @@ export const router = createBrowserRouter([
         path: "/all-tickets-details/:id",
         element: <AllTicketsDetails />,
       },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
     ],
   },
   {
     path: "/",
-    Component: AuthLayout,
+    element: <AuthLayout />,
     children: [
       {
         path: "/register",
-        Component: Register,
+        element: <Register />,
       },
       {
         path: "login",
-        Component: Login,
+        element: <Login />,
       },
     ],
   },
   {
     path: "/dashboard",
-    Component: DashboardLayout,
+    element: <DashboardLayout />,
     children: [
       {
         path: "/dashboard/my-tickets",

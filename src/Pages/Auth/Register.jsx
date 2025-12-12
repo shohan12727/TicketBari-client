@@ -33,10 +33,6 @@ const Register = () => {
 
       //1. User Registration
       const result = await createUser(email, password);
-
-      // 2. Generate image url from selected file
-
-      //3. Save username & profile photo
       await updateUserProfile(name, imageURL);
       navigate("/");
       toast.success("Signup Successfully");
@@ -61,7 +57,7 @@ const Register = () => {
         toast.error(`Google sign-in failed: ${errorMessage}`);
       });
   };
-  
+
   if (loading) {
     return <LoadingSpinner />;
   }

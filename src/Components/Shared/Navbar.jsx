@@ -52,6 +52,18 @@ const Navbar = () => {
               </NavLink>
             )}
             <NavLink
+              to="/contact"
+              className="text-white hover:underline font-bold"
+            >
+              Contact Us
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="text-white hover:underline font-bold"
+            >
+             About
+            </NavLink>
+            <NavLink
               to="/dashboard"
               className="text-white hover:underline font-bold"
             >
@@ -89,11 +101,12 @@ const Navbar = () => {
 
             {/* Login & Sign Up Buttons */}
             {user ? (
-              <Link onClick={handleLogout}>
-                <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
-                  LogOut
-                </button>
-              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold"
+              >
+                LogOut
+              </button>
             ) : (
               <Link to="/login">
                 <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
@@ -151,13 +164,14 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
-            
+
             {user ? (
-              <Link onClick={handleLogout}>
-                <button className="px-4 py-2 text-white   hover:bg-white hover:text-primary transition-all duration-200 font-bold">
-                  LogOut
-                </button>
-              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-white   hover:bg-white hover:text-primary transition-all duration-200 font-bold"
+              >
+                LogOut
+              </button>
             ) : (
               <Link to="/login">
                 <button className="px-4 py-2 text-white   hover:bg-white hover:text-primary transition-all duration-200 font-bold">
@@ -165,6 +179,20 @@ const Navbar = () => {
                 </button>
               </Link>
             )}
+            <Link
+              to="/contact"
+              onClick={closeMenu}
+              className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C] transition-colors duration-200 font-medium"
+            >
+              Contact Us
+            </Link>
+            <Link
+              to="/about"
+              onClick={closeMenu}
+              className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C] transition-colors duration-200 font-medium"
+            >
+             About
+            </Link>
 
             <Link
               to="register"
