@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { useForm } from "react-hook-form";
-import { imageUpload } from "../../Utilities/imagebb";
+import { imageUpload, saveOrUpdateUser } from "../../Utilities/imagebb";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const Register = () => {
@@ -33,6 +33,11 @@ const Register = () => {
 
       //1. User Registration
       const result = await createUser(email, password);
+
+      // user save in database
+
+      await saveOrUpdateUser({ name, email, image: imageURL });
+
       await updateUserProfile(name, imageURL);
       navigate("/");
       toast.success("Signup Successfully");
@@ -48,6 +53,15 @@ const Register = () => {
     signInWithGoogle()
       .then((result) => {
         const user = result.user;
+        // user save in database
+
+        saveOrUpdateUser({
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL,
+        });
+
+
         setUser(user);
         toast.success(`Welcome ${user.displayName || "User"}!`);
         navigate("/");
@@ -205,7 +219,7 @@ const Register = () => {
                   ></path>
                 </g>
               </svg>
-              <span className="ml-2">Login with Google</span>
+              <span className="ml-2">Continue with Google</span>
             </button>
 
             <p className="text-center font-bold mt-4">

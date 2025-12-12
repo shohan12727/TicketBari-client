@@ -48,7 +48,7 @@ export default function ScrollToTopButton() {
       className="fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg z-50 hover:bg-secondary hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 ease-out cursor-pointer"
       aria-label="Scroll to top"
     >
-      <ArrowUp className="w-5 h-5 transition-transform duration-200 group-hover:translate-y-[-2px]" />
+      <ArrowUp className="w-5 h-5 transition-transform duration-200 group-hover:-translate-y-0.5" />
     </button>
   );
 }

@@ -5,6 +5,7 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import { saveOrUpdateUser } from "../../Utilities/imagebb";
 
 const Login = () => {
   const { signIn, setUser, signInWithGoogle } = use(AuthContext);
@@ -20,13 +21,17 @@ const Login = () => {
   } = useForm();
 
   const emailRef = useRef(null);
-  
+
   const handleLogin = async (data) => {
     const { email, password } = data;
     setLoading(true);
     try {
       const userCredential = await signIn(email, password);
       const user = userCredential.user;
+        // user save in database
+
+      await saveOrUpdateUser({ name: user?.displayName, email: user?.email, image: user?.imageURL })
+
       setUser(user);
       toast.success("Login successfully!");
       navigate("/");
@@ -41,6 +46,13 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         const user = result.user;
+        // user save in database
+        saveOrUpdateUser({
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL,
+        });
+
         setUser(user);
         toast.success(`Welcome ${user.displayName || "User"}!`);
         navigate("/");
@@ -173,7 +185,7 @@ const Login = () => {
                   ></path>
                 </g>
               </svg>
-              <span className="ml-2">Login with Google</span>
+              <span className="ml-2">Continue with Google</span>
             </button>
 
             <p className="text-center font-bold mt-4">
