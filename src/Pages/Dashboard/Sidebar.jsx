@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { GrLogout } from "react-icons/gr";
 import { AiOutlineBars, AiOutlineClose } from "react-icons/ai";
 import UserMenu from "./UserMenu";
@@ -12,13 +12,17 @@ import toast from "react-hot-toast";
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(true);
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setActive((prev) => !prev);
   };
   const handleLogout = () => {
     logOut()
-      .then(() => toast.success("Logged out successfully"))
+      .then(() => {
+        toast.success("Logged out successfully");
+        navigate("/");
+      })
       .catch(() => toast.error("Logout failed. Please try again."));
   };
 

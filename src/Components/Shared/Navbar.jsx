@@ -36,75 +36,75 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/" className="nav-link">Home</NavLink>
-
             {user && <NavLink to="/all-tickets" className="nav-link">All Tickets</NavLink>}
             <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
             <NavLink to="/about" className="nav-link">About</NavLink>
-
             {user && <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>}
           </div>
 
-          {/* Desktop Right Section */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Mobile & Desktop Right Section */}
+          <div className="flex items-center space-x-4">
+            {/* Desktop Right Section */}
+            <div className="hidden md:flex items-center space-x-4">
+              <ThemeToggle />
 
-            {/* Theme Toggle */}
-            <ThemeToggle />
+              {user && (
+                <div className="relative">
+                  <button
+                    onClick={toggleDropdown}
+                    className="w-10 h-10 rounded-full overflow-hidden shadow border border-base-300"
+                  >
+                    <img
+                      src={user.photoURL}
+                      alt="Avatar"
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
 
-            {/* Avatar */}
-            {user && (
-              <div className="relative">
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-base-100 border border-base-300 rounded-xl shadow-lg py-2 z-50">
+                      <Link
+                        to="/dashboard/user-profile"
+                        className="dropdown-link"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        My Profile
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {user ? (
                 <button
-                  onClick={toggleDropdown}
-                  className="w-10 h-10 rounded-full overflow-hidden shadow border border-base-300"
+                  onClick={handleLogout}
+                  className="btn btn-outline btn-primary font-bold"
                 >
-                  <img
-                    src={user.photoURL}
-                    alt="Avatar"
-                    className="w-full h-full object-cover"
-                  />
+                  Logout
                 </button>
+              ) : (
+                <Link to="/login">
+                  <button className="btn btn-outline btn-primary font-bold">
+                    Login
+                  </button>
+                </Link>
+              )}
 
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-base-100 border border-base-300 rounded-xl shadow-lg py-2 z-50">
-                    <Link
-                      to="/dashboard/user-profile"
-                      className="dropdown-link"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      My Profile
-                    </Link>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Auth Buttons */}
-            {user ? (
-              <button
-                onClick={handleLogout}
-                className="btn btn-outline btn-primary font-bold"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link to="/login">
-                <button className="btn btn-outline btn-primary font-bold">
-                  Login
+              <Link to="/register">
+                <button className="btn btn-primary text-white font-bold">
+                  Sign Up
                 </button>
               </Link>
-            )}
+            </div>
 
-            <Link to="/register">
-              <button className="btn btn-primary text-white font-bold">
-                Sign Up
+            {/* Mobile ThemeToggle + Hamburger */}
+            <div className="flex md:hidden items-center space-x-2">
+              <ThemeToggle />
+              <button onClick={toggleMenu} className="text-base-content">
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
-            </Link>
+            </div>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button onClick={toggleMenu} className="md:hidden text-base-content">
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </div>
 
@@ -112,8 +112,6 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-base-100 border-t border-base-300">
           <div className="px-4 pt-2 pb-4 space-y-2">
-
-            <ThemeToggle />
 
             <Link to="/" onClick={closeMenu} className="mobile-link">
               Home
@@ -125,9 +123,11 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link to="/dashboard" onClick={closeMenu} className="mobile-link">
-              Dashboard
-            </Link>
+            {user && (
+              <Link to="/dashboard" onClick={closeMenu} className="mobile-link">
+                Dashboard
+              </Link>
+            )}
 
             <Link to="/contact" onClick={closeMenu} className="mobile-link">
               Contact Us
@@ -141,20 +141,22 @@ const Navbar = () => {
               Register
             </Link>
 
-            <Link to="/dashboard/user-profile" onClick={closeMenu} className="mobile-link">
-              My Profile
-            </Link>
+            {user && (
+              <Link to="/dashboard/user-profile" onClick={closeMenu} className="mobile-link">
+                My Profile
+              </Link>
+            )}
 
             {user ? (
               <button
                 onClick={handleLogout}
-                className="btn btn-outline btn-primary w-full"
+                className="mobile-link"
               >
                 Logout
               </button>
             ) : (
               <Link to="/login" className="block">
-                <button className="btn btn-outline btn-primary w-full">
+                <button className="mobile-link">
                   Login
                 </button>
               </Link>

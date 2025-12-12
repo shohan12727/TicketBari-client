@@ -78,7 +78,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="hero  py-2">
+      <div className="hero py-2">
         <div className="card w-full max-w-md mx-auto bg-base-200  p-2">
           <h2 className="text-2xl font-bold text-center">Register Now</h2>
           <div className="card-body">

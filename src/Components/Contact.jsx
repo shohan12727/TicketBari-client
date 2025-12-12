@@ -3,15 +3,17 @@ import { MdEmail } from "react-icons/md";
 const Contact = () => {
   return (
     <div className="grid-bg flex items-center justify-center px-4 py-16">
-      <div className="
+      <div
+        className="
         bg-white dark:bg-gray-900
         text-gray-800 dark:text-gray-200
         rounded-2xl shadow-xl p-10 max-w-lg w-full
         border-t-4 border-primary
         transition-all duration-300 hover:shadow-2xl
-      ">
+      "
+      >
         {/* Page Title */}
-        <h2 className="text-3xl font-bold text-ieee-darkblue dark:text-ieee-blue mb-4 tracking-tight">
+        <h2 className="text-3xl font-bold text-primary dark:text-primary mb-4 tracking-tight">
           Contact Us
         </h2>
 
@@ -22,18 +24,20 @@ const Contact = () => {
 
         {/* Email */}
         <div className="flex items-center gap-4 mb-6 group">
-          <MdEmail className="
+          <MdEmail
+            className="
             w-7 h-7 text-ieee-orange
             group-hover:text-ieee-darkblue
             dark:text-ieee-blue dark:group-hover:text-ieee-orange
             transition-colors
-          " />
+          "
+          />
 
           <a
             href="mailto:aishohan001@gmail.com"
             className="
               text-gray-700 dark:text-gray-300
-              hover:text-ieee-blue dark:hover:text-ieee-orange
+            dark:hover:text-orange-800
               transition-colors text-sm break-all font-medium
             "
           >
