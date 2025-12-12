@@ -22,6 +22,8 @@ import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
 import AllTicketsDetails from "../Pages/AllTickets/AllTicketsDetails";
 import PrivateRoute from "./PrivateRoute";
 import SuccessUrl from "../Pages/Dashboard/Payment/SuccessUrl";
+import CancelUrl from "../Pages/Dashboard/Payment/CancelUrl";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -111,6 +113,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/success-payment",
         element: <SuccessUrl />,
+      },
+      {
+        patch: "/dashboard/cancel-payment",
+        element: <CancelUrl />,
       },
     ],
   },
