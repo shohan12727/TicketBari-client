@@ -10,7 +10,7 @@ const MyBookedTickets = () => {
   const {
     data: bookedTickets = [],
     isLoading,
-    refetch, // paid status === 'paid' refetch hobe
+    refetch,
   } = useQuery({
     queryKey: ["booked-tickets"],
     queryFn: async () => {
@@ -22,7 +22,7 @@ const MyBookedTickets = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="md:p-4">
+    <div className="md:p-4 text-neutral">
       <h2 className="text-3xl font-semibold mb-4">My Booked Tickets</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,7 +34,7 @@ const MyBookedTickets = () => {
   );
 };
 
-// -----------------------------------------
+// -----------------------------------------------------
 
 const TicketCard = ({ ticket }) => {
   const axiosSecure = useAxiosSecure();
@@ -51,47 +51,40 @@ const TicketCard = ({ ticket }) => {
     status,
   } = ticket;
 
-const handlePayment = async (id) => {
-  try {
-    const paymentInfo = {
-      id,
-      paymentTitle: ticketTitle,
-      paymentPrice: Number(price),
-      paymentQuantity: Number(bookingQuantity),
-      userName: user?.displayName,
-      userEmail: user?.email,
-    };
+  const handlePayment = async (id) => {
+    try {
+      const paymentInfo = {
+        id,
+        paymentTitle: ticketTitle,
+        paymentPrice: Number(price),
+        paymentQuantity: Number(bookingQuantity),
+        userName: user?.displayName,
+        userEmail: user?.email,
+      };
 
-    const response = await axiosSecure.post(
-      "/create-checkout-session",
-      paymentInfo
-    );
+      const response = await axiosSecure.post(
+        "/create-checkout-session",
+        paymentInfo
+      );
 
-    // Stripe API returns { url: "https://checkout.stripe.com/..." }
-    const checkoutUrl = response?.data?.url;
-
-    if (checkoutUrl) {
-      // Redirect user to Stripe Checkout
-      window.location.href = checkoutUrl;
-    } else {
-      alert("Unable to start payment. Please try again.");
+      const checkoutUrl = response?.data?.url;
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      } else {
+        alert("Unable to start payment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("Payment initialization failed.");
     }
+  };
 
-  } catch (error) {
-    console.error("Payment error:", error);
-    alert("Payment initialization failed.");
-  }
-};
-
-
-  // Parse the ISO datetime string
   const departure = new Date(departureDateTime);
   const now = new Date();
   const isExpired = departure < now;
 
   const [countdown, setCountdown] = useState("");
 
-  // PURE JS COUNTDOWN TIMER
   useEffect(() => {
     if (status === "Reject" || isExpired) return;
 
@@ -117,7 +110,6 @@ const handlePayment = async (id) => {
     return () => clearInterval(interval);
   }, [departure, status, isExpired]);
 
-  // Format the departure date and time for display
   const formattedDate = departure.toLocaleDateString();
   const formattedTime = departure.toLocaleTimeString([], {
     hour: "2-digit",
@@ -127,7 +119,7 @@ const handlePayment = async (id) => {
   const totalPrice = Number(price) * Number(bookingQuantity);
 
   return (
-    <div className="rounded-lg shadow p-4 border bg-white">
+    <div className="rounded-lg shadow p-4 border bg-base-100 border-base-300 text-neutral">
       <img
         src={imageURL}
         alt={ticketTitle}
@@ -136,56 +128,57 @@ const handlePayment = async (id) => {
 
       <h3 className="text-xl font-semibold mt-3">{ticketTitle}</h3>
 
-      <p className="text-gray-600 mt-1">
+      <p className="text-neutral/70 mt-1">
         <strong>From:</strong> {fromLocation} → <strong>To:</strong>{" "}
         {toLocation}
       </p>
 
-      <p className="text-gray-600">
+      <p className="text-neutral/70">
         <strong>Quantity:</strong> {bookingQuantity}
       </p>
 
       <p className="font-semibold">
         Total Price:
-        <span className="text-green-600"> ${totalPrice.toFixed(2)}</span>
+        <span className="text-primary"> ${totalPrice.toFixed(2)}</span>
       </p>
 
-      <p className="text-gray-500">
+      <p className="text-neutral/60">
         Departure: {formattedDate} | {formattedTime}
       </p>
 
       {/* STATUS BADGE */}
       <span
-        className={`inline-block px-3 py-1 rounded-full text-white text-sm mt-2 ${
-          status === "pending"
-            ? "bg-yellow-500"
-            : status === "accepted"
-            ? "bg-green-600"
-            : status === "paid"
-            ? "bg-green-600"
-            : "bg-red-600"
-        }`}
+        className={`inline-block px-3 py-1 rounded-full text-neutral-content text-sm mt-2
+          ${
+            status === "pending"
+              ? "bg-yellow-500"
+              : status === "accepted"
+              ? "bg-green-600"
+              : status === "paid"
+              ? "bg-green-600"
+              : "bg-red-600"
+          }`}
       >
         {status.toUpperCase()}
       </span>
 
       {/* COUNTDOWN */}
       {status !== "rejected" && !isExpired && (
-        <p className="mt-2 font-bold ">
-          Countdown: <span className="text-[#e30b13]">{countdown}</span>
+        <p className="mt-2 font-bold">
+          Countdown: <span className="text-primary">{countdown}</span>
         </p>
       )}
 
-      {/* EXPIRED MSG */}
+      {/* EXPIRED */}
       {isExpired && (
-        <p className="mt-2 text-red-600 font-semibold">Departure Passed</p>
+        <p className="mt-2 text-error font-semibold">Departure Passed</p>
       )}
 
       {/* PAY NOW BUTTON */}
       {status === "accepted" && !isExpired && (
         <button
-          class="w-full mt-3 text-white py-2 rounded-lg transition 
-         bg-green-600 hover:bg-green-800"
+          className="w-full mt-3 text-neutral-content py-2 rounded-lg transition 
+          bg-green-600 hover:bg-green-700"
           onClick={() => handlePayment(ticket._id)}
         >
           Pay Now

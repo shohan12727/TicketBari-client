@@ -8,89 +8,78 @@ import AdminMenu from "./AdminMenu";
 import useAuth from "../../Hooks/useAuth";
 import { Ticket } from "lucide-react";
 
-// User Menu
-
 const Sidebar = () => {
   const { logOut } = useAuth();
-  //   const [isActive, setActive] = useState(true);
   const [isActive, setActive] = useState(true);
 
-  // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive((prev) => !prev);
   };
 
   return (
     <>
-      {/* Small Screen Navbar, only visible till md breakpoint */}
-
-      <div className="bg-primary text-white flex items-center justify-between px-4 py-3 md:hidden">
+      {/* Small Screen Navbar */}
+      <div className="bg-primary text-neutral flex items-center justify-between px-4 py-3 md:hidden">
         {/* Logo */}
         <div className="cursor-pointer font-bold">
           <Link to="/">
             <div className="flex items-center space-x-2">
-              <Ticket className="w-7 h-7 text-white" />
-              <span className="text-white text-xl font-bold whitespace-nowrap">
-                Ticket<span className="text-[#FFD700]">Bari</span>
+              <Ticket className="w-7 h-7 text-neutral" />
+              <span className="text-neutral text-xl font-bold whitespace-nowrap">
+                Ticket<span className="text-secondary">Bari</span>
               </span>
             </div>
           </Link>
         </div>
 
-        {/* Hamburger / Close Icon */}
+        {/* Hamburger */}
         <button
           onClick={handleToggle}
-          className="p-2 focus:outline-none focus:bg-[#c10a11] rounded-md"
+          className="p-2 focus:outline-none focus:bg-primary/80 rounded-md"
         >
           {isActive ? (
-            <AiOutlineBars className="h-6 w-6 text-white" />
+            <AiOutlineBars className="h-6 w-6 text-neutral" />
           ) : (
-            <AiOutlineClose className="h-6 w-6 text-white" />
+            <AiOutlineClose className="h-6 w-6 text-neutral" />
           )}
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-primary text-white w-64 space-y-6 px-2 py-4 fixed inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-primary text-neutral w-64 space-y-6 px-2 py-4 fixed inset-y-0 left-0 transform ${
           isActive && "-translate-x-full"
-        }  md:translate-x-0  transition duration-200 ease-in-out`}
+        } md:translate-x-0 transition duration-200 ease-in-out`}
       >
         <div className="flex flex-col h-full">
-          {/* Top Content */}
-          <div>
-            {/* Logo */}
-            <div className="w-full hidden md:flex px-4  justify-start items-center">
-              <Link to="/">
-                <div className="flex items-center">
-                  <Ticket className="w-8 h-8 space-x-2 text-white" />
-                  <span className="text-white text-2xl font-bold">
-                    Ticket<span className="text-[#FFD700]">Bari</span>{" "}
-                  </span>
-                </div>
-              </Link>
-            </div>
+          {/* Top Logo */}
+          <div className="w-full hidden md:flex px-4 justify-start items-center">
+            <Link to="/">
+              <div className="flex items-center">
+                <Ticket className="w-8 h-8 text-neutral" />
+                <span className="text-neutral text-2xl font-bold">
+                  Ticket<span className="text-secondary">Bari</span>
+                </span>
+              </div>
+            </Link>
           </div>
 
-          {/* Middle Content */}
+          {/* Menus */}
           <div className="flex flex-col justify-between flex-1 mt-6">
-            {/*  Menu Items */}
             <nav>
-              {/* Role-Based Menu */}
               <UserMenu />
               <VendorMenu />
               <AdminMenu />
             </nav>
           </div>
 
-          {/* Bottom Content */}
+          {/* Logout */}
           <div>
             <button
               onClick={logOut}
-              className="flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform"
+              className="flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-neutral hover:bg-base-200 hover:text-neutral transition-colors duration-300 transform"
             >
               <GrLogout className="w-5 h-5" />
-
               <span className="mx-4 font-medium">Logout</span>
             </button>
           </div>

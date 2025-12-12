@@ -1,14 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @import "tailwindcss";
+/* DaisyUI Light Theme */
 @plugin "daisyui" {
-  themes: light --default;
+  themes: light --default, dark;
 }
 
+/* Custom Light Theme */
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
+
   --color-primary: #e30b13;
-  --color-secondary: #A3070C;
+  --color-secondary: #a3070c;
+}
+
+/* Custom Dark Theme */
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #ff6363;
+  --color-secondary: #aa3b3f;
+
+  /* surface colors */
+  --color-base-100: #1a1a1a;
+  --color-base-200: #2a2a2a;
+  --color-base-300: #3a3a3a;
+
+  /* text colors */
+  --color-neutral: #ffffff;
 }
 
 * {
@@ -17,14 +36,26 @@
 
 /* grid background  */
 
-.grid-bg {
-  background-image:
-    linear-gradient(#ddd 1px, transparent 1px),
+/* .grid-bg {
+  background-image: linear-gradient(#ddd 1px, transparent 1px),
     linear-gradient(90deg, #ddd 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
+  background-size: 60px 60px;
+} */
 
 .active {
   text-decoration: underline;
 }
+
+
+.nav-link {
+  @apply text-base-content font-semibold hover:text-primary transition;
+}
+
+.mobile-link {
+  @apply block px-3 py-2 text-base-content font-semibold rounded-lg hover:bg-base-200;
+}
+
+.dropdown-link {
+  @apply block px-4 py-2 text-base-content hover:bg-base-200 font-semibold;
+}
+
