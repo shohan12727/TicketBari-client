@@ -7,6 +7,7 @@ import VendorMenu from "./VendorMenu";
 import AdminMenu from "./AdminMenu";
 import useAuth from "../../Hooks/useAuth";
 import { Ticket } from "lucide-react";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -14,6 +15,11 @@ const Sidebar = () => {
 
   const handleToggle = () => {
     setActive((prev) => !prev);
+  };
+  const handleLogout = () => {
+    logOut()
+      .then(() => toast.success("Logged out successfully"))
+      .catch(() => toast.error("Logout failed. Please try again."));
   };
 
   return (
@@ -76,8 +82,8 @@ const Sidebar = () => {
           {/* Logout */}
           <div>
             <button
-              onClick={logOut}
-              className="flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-neutral hover:bg-base-200 hover:text-neutral transition-colors duration-300 transform"
+              onClick={handleLogout}
+              className="flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-white hover:bg-secondary hover:text-white transition-colors duration-300 transform"
             >
               <GrLogout className="w-5 h-5" />
               <span className="mx-4 font-medium">Logout</span>
