@@ -2,15 +2,26 @@ import { use, useState } from "react";
 import { Menu, X, Ticket, User } from "lucide-react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Contexts/AuthContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user } = use(AuthContext);
+  const { user, logOut } = use(AuthContext);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logged out successfully");
+      })
+      .catch(() => {
+        toast.error("Logout failed. Please try again.");
+      });
+  };
 
   return (
     <nav className="bg-primary shadow-lg">
@@ -32,12 +43,14 @@ const Navbar = () => {
             <NavLink to="/" className="text-white hover:underline font-bold">
               Home
             </NavLink>
-            <NavLink
-              to="/all-tickets"
-              className="text-white hover:underline font-bold"
-            >
-              All Tickets
-            </NavLink>
+            {user && (
+              <NavLink
+                to="/all-tickets"
+                className="text-white hover:underline font-bold"
+              >
+                All Tickets
+              </NavLink>
+            )}
             <NavLink
               to="/dashboard"
               className="text-white hover:underline font-bold"
@@ -52,35 +65,43 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center justify-center w-10 h-10 hover:${} rounded-full bg-white text-primary "
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-primary focus:outline-none"
               >
-                <div className="relative group">
-                  <img
-                    src={user?.photoURL}
-                    alt="Avatar"
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <span className="absolute  mt-2 -top-3 right-10 hidden group-hover:block bg-white text-black px-2 py-1 rounded">
-                    {user?.displayName}
-                  </span>
-                </div>
+                <img
+                  src={user?.photoURL}
+                  alt="Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded font-bold text-primary shadow-2xl py-2 z-50">
-                  <a href="#" className="block px-4 py-2 ">
+                <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-xl py-2 z-50 border border-gray-200">
+                  <Link
+                    to="/dashboard/user-profile"
+                    className="block px-4 py-2 text-primary font-bold hover:bg-gray-100 transition"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
                     My Profile
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
 
             {/* Login & Sign Up Buttons */}
-            <Link to="/login">
-              <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
-                Login
-              </button>
-            </Link>
+            {user ? (
+              <Link onClick={handleLogout}>
+                <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
+                  LogOut
+                </button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button className="px-4 py-2 text-white border-2 border-white rounded-lg hover:bg-white hover:text-primary transition-all duration-200 font-bold">
+                  Login
+                </button>
+              </Link>
+            )}
+
             <Link to="/register">
               <button className="px-4 py-2 bg-white text-primary rounded-lg hover:scale-105 transition  font-bold shadow-md">
                 Sign Up
@@ -112,13 +133,17 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/all-tickets"
-              onClick={closeMenu}
-              className="block px-3 py-2  text-white hover:bg-[#A3070C] font-bold"
-            >
-              All Tickets
-            </Link>
+
+            {user && (
+              <Link
+                to="/all-tickets"
+                onClick={closeMenu}
+                className="block px-3 py-2  text-white hover:bg-[#A3070C] font-bold"
+              >
+                All Tickets
+              </Link>
+            )}
+
             <Link
               to="/dashboard"
               onClick={closeMenu}
@@ -126,13 +151,21 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
-            <Link
-              to="login"
-              onClick={closeMenu}
-              className="block px-3 py-2 rounded-lg text-white hover:bg-[#A3070C]  transition-colors duration-200 font-medium"
-            >
-              Login
-            </Link>
+            
+            {user ? (
+              <Link onClick={handleLogout}>
+                <button className="px-4 py-2 text-white   hover:bg-white hover:text-primary transition-all duration-200 font-bold">
+                  LogOut
+                </button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button className="px-4 py-2 text-white   hover:bg-white hover:text-primary transition-all duration-200 font-bold">
+                  Login
+                </button>
+              </Link>
+            )}
+
             <Link
               to="register"
               onClick={closeMenu}

@@ -20,7 +20,7 @@ import ManageTicket from "../Pages/Dashboard/Admin/ManageTicket";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
 import AllTicketsDetails from "../Pages/AllTickets/AllTicketsDetails";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute"
 import SuccessUrl from "../Pages/Dashboard/Payment/SuccessUrl";
 import CancelUrl from "../Pages/Dashboard/Payment/CancelUrl";
 
@@ -36,7 +36,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets",
-        Component: AllTickets,
+        element: (
+          <PrivateRoute>
+            <AllTickets />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-tickets-details/:id",

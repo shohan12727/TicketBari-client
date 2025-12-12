@@ -5,12 +5,14 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import { imageUpload } from "../../Utilities/imagebb";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const Register = () => {
   const { createUser, setUser, signInWithGoogle, updateUserProfile } =
     use(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // react hook form
   const {
@@ -23,6 +25,8 @@ const Register = () => {
     const { name, image, email, password } = data;
     const imageFile = image[0];
 
+    setLoading(true);
+
     try {
       const imageURL = await imageUpload(imageFile);
       // console.log(imageURL)
@@ -34,14 +38,13 @@ const Register = () => {
 
       //3. Save username & profile photo
       await updateUserProfile(name, imageURL);
-
       navigate("/");
-      toast.success("Signup Successful");
-
+      toast.success("Signup Successfully");
       console.log(result);
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,11 +61,15 @@ const Register = () => {
         toast.error(`Google sign-in failed: ${errorMessage}`);
       });
   };
+  
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
-      <div className="hero bg-base-200 py-2">
-        <div className="card w-full max-w-md mx-auto  p-2">
+      <div className="hero  py-2">
+        <div className="card w-full max-w-md mx-auto bg-base-200  p-2">
           <h2 className="text-2xl font-bold text-center">Register Now</h2>
           <div className="card-body">
             <form onSubmit={handleSubmit(handleRegister)}>
@@ -213,7 +220,6 @@ const Register = () => {
             </p>
           </div>
         </div>
-        <Toaster position="top-right" reverseOrder={false} />
       </div>
     </>
   );
