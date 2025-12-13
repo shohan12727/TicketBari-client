@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import useRole from "../hooks/useRole";
+import useRole from "../Hooks/useRole";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
 const AdminRoute = ({ children }) => {

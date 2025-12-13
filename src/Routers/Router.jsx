@@ -10,12 +10,10 @@ import DashboardLayout from "../Layout/DashBoardLayout";
 import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
 import UserProfile from "../Pages/Dashboard/User/UserProfile";
 import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
-import VendorProfile from "../Pages/Dashboard/Vendor/VendorProfile";
 import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
 import MyAddedTicket from "../Pages/Dashboard/Vendor/MyAddedTicket";
 import RequestBooking from "../Pages/Dashboard/Vendor/RequestBooking";
 import RevenueOverView from "../Pages/Dashboard/Vendor/RevenueOverView";
-import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
 import ManageTicket from "../Pages/Dashboard/Admin/ManageTicket";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import AdvertiseTicket from "../Pages/Dashboard/Admin/AdvertiseTicket";
@@ -25,6 +23,8 @@ import SuccessUrl from "../Pages/Dashboard/Payment/SuccessUrl";
 import CancelUrl from "../Pages/Dashboard/Payment/CancelUrl";
 import Contact from "../Components/Contact";
 import About from "../Components/About";
+import AdminRoute from "./AdminRoute";
+import VendorRoute from "./VendorRoute";
 
 export const router = createBrowserRouter([
   {
@@ -109,18 +109,12 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/vendor-profile",
-        element: (
-          <PrivateRoute>
-            <VendorProfile />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "/dashboard/add-ticket",
         element: (
           <PrivateRoute>
-            <AddTicket />
+            <VendorRoute>
+              <AddTicket />
+            </VendorRoute>
           </PrivateRoute>
         ),
       },
@@ -128,7 +122,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/my-added-tickets",
         element: (
           <PrivateRoute>
-            <MyAddedTicket />
+            <VendorRoute>
+              <MyAddedTicket />
+            </VendorRoute>
           </PrivateRoute>
         ),
       },
@@ -136,7 +132,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/requested-bookings",
         element: (
           <PrivateRoute>
-            <RequestBooking />
+            <VendorRoute>
+              <RequestBooking />
+            </VendorRoute>
           </PrivateRoute>
         ),
       },
@@ -144,15 +142,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/revenue-overview",
         element: (
           <PrivateRoute>
-            <RevenueOverView />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/dashboard/admin-profile",
-        element: (
-          <PrivateRoute>
-            <AdminProfile />
+            <VendorRoute>
+              <RevenueOverView />
+            </VendorRoute>
           </PrivateRoute>
         ),
       },
@@ -160,7 +152,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/manage-tickets",
         element: (
           <PrivateRoute>
-            <ManageTicket />
+            <AdminRoute>
+              <ManageTicket />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -168,7 +162,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/manage-users",
         element: (
           <PrivateRoute>
-            <ManageUser />
+            <AdminRoute>
+              <ManageUser />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -176,7 +172,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/advertise-tickets",
         element: (
           <PrivateRoute>
-            <AdvertiseTicket />
+            <AdminRoute>
+              <AdvertiseTicket />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },

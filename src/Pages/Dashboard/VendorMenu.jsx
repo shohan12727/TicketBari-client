@@ -1,12 +1,18 @@
 import { NavLink } from "react-router";
-import { FaUser, FaPlus, FaTicketAlt, FaClipboardList, FaChartLine } from "react-icons/fa";
+import {
+  FaPlus,
+  FaTicketAlt,
+  FaClipboardList,
+  FaChartLine,
+  FaUser,
+} from "react-icons/fa";
 
 const VendorMenu = () => {
   return (
     <div className="flex flex-col space-y-2 mt-2">
-      {/* Vendor Profile */}
-      <NavLink  
-        to="/dashboard/vendor-profile"
+      {/* User Profile */}
+      <NavLink
+        to="/dashboard/user-profile"
         className={({ isActive }) =>
           `flex items-center px-4 py-2 transition-colors duration-300 transform rounded-lg ${
             isActive
@@ -16,7 +22,7 @@ const VendorMenu = () => {
         }
       >
         <FaUser className="w-5 h-5" />
-        <span className="mx-4 font-medium">Vendor Profile</span>
+        <span className="mx-4 font-medium">Profile</span>
       </NavLink>
 
       {/* Add Ticket */}

@@ -15,7 +15,7 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-base-200 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Profile Card */}
         <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden">
@@ -28,7 +28,7 @@ const UserProfile = () => {
             <div className="flex flex-col items-center sm:flex-row sm:items-end -mt-16 sm:-mt-20">
               <div className="relative">
                 <img
-                  src={photo || "https://via.placeholder.com/150"}
+                  src={photo}
                   alt={name || "User"}
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-base-100 shadow-lg object-cover"
                 />
@@ -36,7 +36,7 @@ const UserProfile = () => {
               </div>
 
               {/* Name and Role (Desktop) */}
-              <div className="hidden sm:block sm:ml-6 sm:mb-4">
+              <div className="hidden sm:block sm:ml-6  sm:mb-4">
                 <h1 className="text-3xl mt-3 font-bold text-base-content">
                   {name || "Anonymous User"}
                 </h1>

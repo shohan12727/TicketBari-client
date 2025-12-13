@@ -1,12 +1,12 @@
 import { NavLink } from "react-router";
-import { FaUser, FaTicketAlt, FaUsers, FaBullhorn } from "react-icons/fa";
+import {  FaTicketAlt, FaUsers, FaBullhorn, FaUser } from "react-icons/fa";
 
 const AdminMenu = () => {
   return (
     <div className="flex flex-col space-y-2 mt-2">
-      {/* Admin Profile */}
+      {/* User Profile */}
       <NavLink
-        to="/dashboard/admin-profile"
+        to="/dashboard/user-profile"
         className={({ isActive }) =>
           `flex items-center px-4 py-2 transition-colors duration-300 transform rounded-lg ${
             isActive
@@ -16,7 +16,7 @@ const AdminMenu = () => {
         }
       >
         <FaUser className="w-5 h-5" />
-        <span className="mx-4 font-medium">Admin Profile</span>
+        <span className="mx-4 font-medium">Profile</span>
       </NavLink>
 
       {/* Manage Tickets */}

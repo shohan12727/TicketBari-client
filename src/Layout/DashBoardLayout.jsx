@@ -7,7 +7,7 @@ const DashboardLayout = () => {
   return (
     <>
       <TopScroll />
-      <ScrollToTopButton/>
+      <ScrollToTopButton />
       <div className=" min-h-screen md:flex ">
         {/* Left Side: Sidebar Component */}
         <Sidebar />
@@ -15,6 +15,7 @@ const DashboardLayout = () => {
         <div className="flex-1  md:ml-64">
           <div className="p-5">
             {/* Outlet for dynamic contents */}
+            {/* eikhane overview type kicho dekhao lagbe  */}
             <Outlet />
           </div>
         </div>

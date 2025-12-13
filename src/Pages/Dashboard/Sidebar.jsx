@@ -8,11 +8,14 @@ import AdminMenu from "./AdminMenu";
 import useAuth from "../../Hooks/useAuth";
 import { Ticket } from "lucide-react";
 import toast from "react-hot-toast";
+import useRole from "../../Hooks/useRole";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(true);
   const navigate = useNavigate();
+  const [role, isRoleLoading] = useRole();
 
   const handleToggle = () => {
     setActive((prev) => !prev);
@@ -25,6 +28,10 @@ const Sidebar = () => {
       })
       .catch(() => toast.error("Logout failed. Please try again."));
   };
+
+  if (isRoleLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -77,9 +84,10 @@ const Sidebar = () => {
           {/* Menus */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
-              <UserMenu />
-              <VendorMenu />
-              <AdminMenu />
+              {/* Role-Based Menu */}
+              {role === "customer" && <UserMenu />}
+              {role === "vendor" && <VendorMenu />}
+              {role === "admin" && <AdminMenu />}
             </nav>
           </div>
 
