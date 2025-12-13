@@ -46,7 +46,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets-details/:id",
-        element: <AllTicketsDetails />,
+        element: (
+          <PrivateRoute>
+            <AllTicketsDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/contact",
@@ -74,63 +78,123 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard/my-tickets",
-        element: <MyBookedTickets />,
+        element: (
+          <PrivateRoute>
+            <MyBookedTickets />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/user-profile",
-        element: <UserProfile></UserProfile>,
+        element: (
+          <PrivateRoute>
+            <UserProfile></UserProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/transaction-history",
-        element: <TransactionHistory />,
+        element: (
+          <PrivateRoute>
+            <TransactionHistory />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/vendor-profile",
-        element: <VendorProfile />,
+        element: (
+          <PrivateRoute>
+            <VendorProfile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/add-ticket",
-        element: <AddTicket />,
+        element: (
+          <PrivateRoute>
+            <AddTicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/my-added-tickets",
-        element: <MyAddedTicket />,
+        element: (
+          <PrivateRoute>
+            <MyAddedTicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/requested-bookings",
-        element: <RequestBooking />,
+        element: (
+          <PrivateRoute>
+            <RequestBooking />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/revenue-overview",
-        element: <RevenueOverView />,
+        element: (
+          <PrivateRoute>
+            <RevenueOverView />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/admin-profile",
-        element: <AdminProfile />,
+        element: (
+          <PrivateRoute>
+            <AdminProfile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manage-tickets",
-        element: <ManageTicket />,
+        element: (
+          <PrivateRoute>
+            <ManageTicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manage-users",
-        element: <ManageUser />,
+        element: (
+          <PrivateRoute>
+            <ManageUser />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/advertise-tickets",
-        element: <AdvertiseTicket />,
+        element: (
+          <PrivateRoute>
+            <AdvertiseTicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/success-payment",
-        element: <SuccessUrl />,
+        element: (
+          <PrivateRoute>
+            <SuccessUrl />
+          </PrivateRoute>
+        ),
       },
       {
         patch: "/dashboard/cancel-payment",
-        element: <CancelUrl />,
+        element: (
+          <PrivateRoute>
+            <CancelUrl />
+          </PrivateRoute>
+        ),
       },
     ],
   },
