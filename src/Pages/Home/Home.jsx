@@ -11,8 +11,8 @@ const Home = () => {
       <Banner />
       <WhyChooseUs />
       <HowTicketBariWorks />
-      <CommonQandA />
       <PopularRoutes />
+      <CommonQandA />
     </div>
   );
 };
