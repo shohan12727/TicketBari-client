@@ -14,6 +14,7 @@ const ManageTicket = () => {
     queryKey: ["all-tickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/tickets");
+      
       return res.data;
     },
   });
@@ -21,11 +22,11 @@ const ManageTicket = () => {
   
   const handleApproved = async (id, status) => {
     try {
-      const res = await axiosSecure.patch(`/tickets/status/${id}`, { status });
+      const res = await axiosSecure.patch(`/tickets/status/approved/${id}`, { status });
 
       if (res.data.modifiedCount > 0) {
         Swal.fire({
-          title: `${status} successfully`,
+          title: `Approved successfully`,
           icon: "success",
           draggable: true,
         });
@@ -40,37 +41,43 @@ const ManageTicket = () => {
     }
   };
 
-  const handleReject = async (id) => {
-    try {
+const handleReject = async (id) => {
+  try {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Reject it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    const res = await axiosSecure.patch(
+      `/tickets/status/rejected/${id}`,
+      { status: "rejected" }
+    );
+
+    if (res.data.modifiedCount > 0) {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Reject it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const res = await axiosSecure.delete(`/tickets/${id}`);
-          if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: "Rejected!",
-              text: "Ticket rejected successfully.",
-              icon: "success",
-            });
-            refetch();
-          }
-        }
+        title: "Rejected!",
+        text: "Ticket rejected successfully.",
+        icon: "success",
       });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: err.response?.data?.message || "Something went wrong!",
-      });
+      refetch();
     }
-  };
+
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: err.response?.data?.message || "Something went wrong!",
+    });
+  }
+};
+
 
   if (isLoading) {
     return <LoadingSpinner />;
