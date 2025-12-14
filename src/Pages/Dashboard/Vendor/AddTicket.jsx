@@ -60,7 +60,6 @@ export default function TicketForm() {
       quantity,
       price,
       perks,
-
       departureDateTime,
       image,
     } = data;
@@ -80,8 +79,8 @@ export default function TicketForm() {
         toLocation,
         fromLocation,
         ticketTitle,
-        quantity,
-        price,
+        quantity: Number(quantity),
+        price: Number(price),
         perks,
         departureDateTime,
         imageURL,

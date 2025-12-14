@@ -39,7 +39,7 @@ const Navbar = () => {
             {user && <NavLink to="/all-tickets" className="nav-link">All Tickets</NavLink>}
             <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
             <NavLink to="/about" className="nav-link">About</NavLink>
-            {user && <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>}
+            {user && <NavLink to="/dashboard/user-profile" className="nav-link">Dashboard</NavLink>}
           </div>
 
           {/* Mobile & Desktop Right Section */}
@@ -124,7 +124,7 @@ const Navbar = () => {
             )}
 
             {user && (
-              <Link to="/dashboard" onClick={closeMenu} className="mobile-link">
+              <Link to="/dashboard/user-profile" onClick={closeMenu} className="mobile-link">
                 Dashboard
               </Link>
             )}

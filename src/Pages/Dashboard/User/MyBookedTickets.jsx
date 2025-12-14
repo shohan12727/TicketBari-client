@@ -173,7 +173,7 @@ const TicketCard = ({ ticket }) => {
       {isExpired && (
         <p className="mt-2 text-error font-semibold">Departure Passed</p>
       )}
-
+      {/* payment status hole pay now button er eikhane paid dekha utbe  dekhabe paid na hole eita dekhabe  */}
       {/* PAY NOW BUTTON */}
       {status === "accepted" && !isExpired && (
         <button

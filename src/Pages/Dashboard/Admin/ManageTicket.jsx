@@ -11,7 +11,6 @@ const ManageTicket = () => {
     refetch,
     isLoading,
   } = useQuery({
-    // refetch and loading use korbo
     queryKey: ["all-tickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/tickets");
@@ -19,6 +18,7 @@ const ManageTicket = () => {
     },
   });
 
+  
   const handleApproved = async (id, status) => {
     try {
       const res = await axiosSecure.patch(`/tickets/status/${id}`, { status });
