@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
-import useAuth from "../../../Hooks/useAuth";
 
 const MyBookedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,7 +37,7 @@ const MyBookedTickets = () => {
 
 const TicketCard = ({ ticket }) => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+
 
   const {
     ticketTitle,
@@ -49,7 +48,11 @@ const TicketCard = ({ ticket }) => {
     toLocation,
     departureDateTime,
     status,
+    email,
+    name
   } = ticket;
+
+  // console.log(ticket)
 
   const handlePayment = async (id) => {
     try {
@@ -58,9 +61,10 @@ const TicketCard = ({ ticket }) => {
         paymentTitle: ticketTitle,
         paymentPrice: Number(price),
         paymentQuantity: Number(bookingQuantity),
-        userName: user?.displayName,
-        userEmail: user?.email,
+        userName: name,
+        userEmail: email,
       };
+      
 
       const response = await axiosSecure.post(
         "/create-checkout-session",

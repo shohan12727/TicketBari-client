@@ -16,6 +16,9 @@ const SuccessUrl = () => {
     }
   }, [sessionId, axiosSecure]);
 
+
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-10 rounded-2xl shadow-xl text-center max-w-md w-full">
@@ -37,10 +40,10 @@ const SuccessUrl = () => {
 
         {/* Button */}
         <Link
-          to="/dashboard/my-tickets"
+          to="/dashboard/transaction-history"
           className="inline-block bg-primary hover:bg-secondary text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow"
         >
-          View Your Tickets
+          View Transaction History
         </Link>
       </div>
     </div>
