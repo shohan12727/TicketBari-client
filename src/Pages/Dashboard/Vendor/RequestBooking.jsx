@@ -20,6 +20,7 @@ const RequestBooking = () => {
       return res.data;
     },
   });
+  console.log(requestBookedTickets)
 
   const handleAccept = async (id) => {
     try {
@@ -81,9 +82,9 @@ const RequestBooking = () => {
             {requestBookedTickets.map((item) => (
               <tr key={item._id} className="bg-base-100">
                 <td className="border border-base-300 p-2">
-                  {user?.displayName}
+                  {item.name}
                 </td>
-                <td className="border border-base-300 p-2">{user?.email}</td>
+                <td className="border border-base-300 p-2">{item.email}</td>
 
                 <td className="border border-base-300 p-2">
                   {item.ticketTitle}

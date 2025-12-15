@@ -350,9 +350,12 @@ import { useForm } from "react-hook-form";
 import { X, Calendar, MapPin, Package, DollarSign, Clock } from "lucide-react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
 
 const AllTicketsDetails = () => {
   const { id } = useParams();
+  const {user} = useAuth();
+  // console.log(user?.displayName, user?.email);
   const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState({
@@ -370,6 +373,8 @@ const AllTicketsDetails = () => {
       return res.data;
     },
   });
+  // console.log(approvedTicketsDetails);
+
 
   const {
     register,
@@ -428,6 +433,8 @@ const AllTicketsDetails = () => {
     const bookingQuantity = data.bookingQuantity;
     try {
       const bookingData = {
+        name: user?.displayName,
+        email: user?.email,
         ticketTitle,
         imageURL,
         price,
