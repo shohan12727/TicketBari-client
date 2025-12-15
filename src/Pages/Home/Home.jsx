@@ -5,12 +5,14 @@ import CommonQandA from "./CommonQandA";
 import PopularRoutes from "./PopularRoutes";
 import HowTicketBariWorks from "./HowTicketBariWorks";
 import Advertisement from "./Advertisement ";
+import LatestTicket from "./LatestTicket";
 
 const Home = () => {
   return (
     <div>
       <Banner />
       <Advertisement />
+      <LatestTicket/>
       <WhyChooseUs />
       <HowTicketBariWorks />
       <PopularRoutes />

@@ -27,11 +27,10 @@ const Advertisement = () => {
       {/* Header Section */}
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Featured Tickets
+          Advertise Tickets
         </h2>
         <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
           Discover our handpicked selection of premium travel experiences
-          (advertise tickets)
         </p>
       </div>
 
