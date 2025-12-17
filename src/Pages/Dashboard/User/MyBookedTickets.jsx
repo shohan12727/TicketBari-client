@@ -1,22 +1,24 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
+import useAuth from "../../../Hooks/useAuth";
 
 const MyBookedTickets = () => {
   const axiosSecure = useAxiosSecure();
+    const { user } = useAuth(); 
 
-  const {
-    data: bookedTickets = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["booked-tickets"],
+
+  const { data: bookedTickets = [], isLoading } = useQuery({
+    queryKey: ["booked-tickets", user?.email],
+     enabled: !!user?.email, 
     queryFn: async () => {
-      const res = await axiosSecure.get("/booking-tickets");
+      const res = await axiosSecure.get(`/booking-tickets?email=${user.email}`);
       return res.data;
     },
   });
+
+  console.log(bookedTickets)
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -36,8 +38,9 @@ const MyBookedTickets = () => {
 // -----------------------------------------------------
 
 const TicketCard = ({ ticket }) => {
-  const axiosSecure = useAxiosSecure();
+    const [isPaidClicked, setIsPaidClicked] = useState(false);
 
+  const axiosSecure = useAxiosSecure();
 
   const {
     ticketTitle,
@@ -49,7 +52,7 @@ const TicketCard = ({ ticket }) => {
     departureDateTime,
     status,
     email,
-    name
+    name,
   } = ticket;
 
   // console.log(ticket)
@@ -64,7 +67,6 @@ const TicketCard = ({ ticket }) => {
         userName: name,
         userEmail: email,
       };
-      
 
       const response = await axiosSecure.post(
         "/create-checkout-session",
@@ -181,11 +183,21 @@ const TicketCard = ({ ticket }) => {
       {/* PAY NOW BUTTON */}
       {status === "accepted" && !isExpired && (
         <button
-          className="w-full mt-3 text-neutral-content py-2 rounded-lg transition 
-          bg-green-600 hover:bg-green-700"
-          onClick={() => handlePayment(ticket._id)}
+          disabled={isPaidClicked}
+          className={`w-full mt-3 py-2 rounded-lg transition text-neutral-content
+      ${
+        isPaidClicked
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-green-600 hover:bg-green-700"
+      }`}
+          onClick={() => {
+            if (!isPaidClicked) {
+              setIsPaidClicked(true);
+              handlePayment(ticket._id);
+            }
+          }}
         >
-          Pay Now
+          {isPaidClicked ? "Paid" : "Pay Now"}
         </button>
       )}
     </div>

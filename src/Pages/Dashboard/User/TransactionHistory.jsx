@@ -2,37 +2,41 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
+import useAuth from "../../../Hooks/useAuth";
 
 const TransactionHistory = () => {
   const axiosSecure = useAxiosSecure();
+      const { user } = useAuth(); 
+
+  
 
   const {
-    data: successTransaction = [],
+    data: allTransactions = [],
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["stripe-transactions"],
+    queryKey: ["stripe-transactions",  user?.email],
+      enabled: !!user?.email, 
     queryFn: async () => {
-      const res = await axiosSecure.get("/dashboard/payment/success");
+      const res = await axiosSecure.get(`/dashboard/payment/success?email=${user.email}`);
       return res.data;
     },
-    staleTime: 1000 * 60, // 1 minute – prevents unnecessary refetching
+    staleTime: 1000 * 60, 
   });
-
   /**
    * Deduplicate transactions by Stripe transactionId (pi_*)
    * This is a UI-level safety net, not a backend replacement.
    */
   const uniqueTransactions = useMemo(() => {
     const map = new Map();
-    successTransaction.forEach((tx) => {
+    allTransactions.forEach((tx) => {
       if (!map.has(tx.transactionId)) {
         map.set(tx.transactionId, tx);
       }
     });
     return Array.from(map.values());
-  }, [successTransaction]);
+  }, [allTransactions]);
 
   if (isLoading) {
     return <LoadingSpinner />;

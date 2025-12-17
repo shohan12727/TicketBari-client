@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 
 const RequestBooking = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
 
   const {
     data: requestBookedTickets = [],
@@ -16,7 +15,7 @@ const RequestBooking = () => {
   } = useQuery({
     queryKey: ["request-booked-tickets"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/booking-tickets");
+      const res = await axiosSecure.get("/booking-tickets/vendor");
       return res.data;
     },
   });
