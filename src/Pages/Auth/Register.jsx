@@ -41,7 +41,7 @@ const Register = () => {
       await updateUserProfile(name, imageURL);
       navigate("/");
       toast.success("Signup Successfully");
-      console.log(result);
+      // console.log(result);
     } catch (err) {
       toast.error(err?.message);
     } finally {

@@ -19,7 +19,7 @@ const RequestBooking = () => {
       return res.data;
     },
   });
-  console.log(requestBookedTickets)
+
 
   const handleAccept = async (id) => {
     try {
