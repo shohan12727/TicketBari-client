@@ -1,7 +1,6 @@
 import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../Hooks/useAuth";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
 import Swal from "sweetalert2";
 
