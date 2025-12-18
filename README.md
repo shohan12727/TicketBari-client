@@ -47,7 +47,6 @@ This repository contains the **frontend (client side)** of the application, buil
 | Hero Banner | Slider showcasing platform highlights |
 | Advertisement Tickets | 6 admin-selected tickets |
 | Latest Tickets | Recently added tickets |
-| Extra Sections | Popular Routes, Why Choose Us |
 | Responsive Design | Mobile, Tablet & Desktop |
 
 ---
@@ -123,26 +122,12 @@ This repository contains the **frontend (client side)** of the application, buil
 
 ---
 
-## 🔐 Environment Variables
-
-| Variable | Purpose |
-|--------|---------|
-| VITE_FIREBASE_API_KEY | Firebase API Key |
-| VITE_FIREBASE_AUTH_DOMAIN | Firebase Auth Domain |
-| VITE_FIREBASE_PROJECT_ID | Firebase Project ID |
-| VITE_FIREBASE_STORAGE_BUCKET | Firebase Storage |
-| VITE_FIREBASE_MESSAGING_SENDER_ID | Firebase Sender ID |
-| VITE_FIREBASE_APP_ID | Firebase App ID |
-| VITE_STRIPE_PUBLIC_KEY | Stripe Public Key |
-| VITE_API_BASE_URL | Backend Server URL |
-
----
 
 ## ⚙️ Installation & Setup
 
 | Step | Command |
 |----|--------|
-| Clone Repo | `git clone https://github.com/your-username/ticket-bari-client.git` |
+| Clone Repo | `git clone https://github.com/shohan12727/TicketBari-client` |
 | Install Packages | `npm install` |
 | Run Development | `npm run dev` |
 | Build Project | `npm run build` |
@@ -153,33 +138,12 @@ This repository contains the **frontend (client side)** of the application, buil
 
 | Role | Email | Password |
 |----|-------|---------|
-| Admin | admin@email.com | admin123 |
-| Vendor | vendor@email.com | vendor123 |
+| Admin | admin@email.com | Pa$$w0rd! |
+| Vendor | vendor1@gmail.com | Pa$$w0rd! |
 
 ---
 
-## ✅ Deployment Checklist
 
-| Requirement | Status |
-|-----------|-------|
-| No CORS / 404 / 504 Errors | ✅ |
-| Reload-safe Routing | ✅ |
-| Firebase Authorized Domain | ✅ |
-| Protected APIs | ✅ |
-| Responsive Design | ✅ |
-
----
-
-## 📌 Notes
-
-| Item | Description |
-|----|-------------|
-| Original Work | No module or assignment cloning |
-| Commit History | 20+ meaningful client-side commits |
-| UI Standard | Clean, modern & recruiter-friendly |
-| Security | Environment variables used |
-
----
 
 ## © Copyright
 
