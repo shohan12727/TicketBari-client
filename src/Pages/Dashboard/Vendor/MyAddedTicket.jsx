@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +9,7 @@ import Swal from "sweetalert2";
 const MyAddedTicket = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   const {
     data: tickets = [],
@@ -20,6 +23,37 @@ const MyAddedTicket = () => {
     },
     enabled: !!user?.email,
   });
+
+  const handleUpdate = async (ticket) => {
+    setSelectedTicket(ticket);
+    document.getElementById("update_modal").showModal();
+  };
+
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmitUpdate = async (data) => {
+    try {
+      const res = await axiosSecure.patch(`/tickets/${selectedTicket._id}`, {
+        fromLocation: data.fromLocation,
+        toLocation: data.toLocation,
+        transportType: data.transportType,
+        ticketTitle: data.ticketTitle,
+        quantity: Number(data.quantity),
+        price: Number(data.price),
+        imageURL: data.imageURL,
+        departureDateTime: data.departureDateTime,
+      });
+
+      if (res.data.modifiedCount > 0) {
+        Swal.fire("Success", "Ticket updated successfully", "success");
+        refetch();
+        reset();
+        document.getElementById("update_modal").close();
+      }
+    } catch {
+      Swal.fire("Error", "Update failed", "error");
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -115,6 +149,7 @@ const MyAddedTicket = () => {
               {/* Buttons */}
               <div className="flex gap-3 pt-3">
                 <button
+                  onClick={() => handleUpdate(ticket)}
                   disabled={ticket.status === "rejected"}
                   className="btn btn-sm btn-primary disabled:btn-disabled"
                 >
@@ -133,6 +168,97 @@ const MyAddedTicket = () => {
           </div>
         ))}
       </div>
+      {/* modal  */}
+      <dialog id="update_modal" className="modal">
+        <div className="modal-box max-w-2xl">
+          <h3 className="font-bold text-lg mb-4">Update Ticket</h3>
+
+          {selectedTicket && (
+            <form onSubmit={handleSubmit(onSubmitUpdate)} className="space-y-3">
+              <input
+                defaultValue={selectedTicket.ticketTitle}
+                {...register("ticketTitle")}
+                className="input input-bordered w-full"
+                placeholder="Ticket Title"
+              />
+
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  defaultValue={selectedTicket.fromLocation}
+                  {...register("fromLocation")}
+                  className="input input-bordered"
+                  placeholder="From"
+                />
+
+                <input
+                  defaultValue={selectedTicket.toLocation}
+                  {...register("toLocation")}
+                  className="input input-bordered"
+                  placeholder="To"
+                />
+              </div>
+
+              <select
+                defaultValue={selectedTicket.transportType}
+                {...register("transportType")}
+                className="select select-bordered w-full"
+              >
+                <option>Bus</option>
+                <option>Train</option>
+                <option>Plane</option>
+                <option>Ship</option>
+              </select>
+
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  type="number"
+                  defaultValue={selectedTicket.price}
+                  {...register("price")}
+                  className="input input-bordered"
+                  placeholder="Price"
+                />
+
+                <input
+                  type="number"
+                  defaultValue={selectedTicket.quantity}
+                  {...register("quantity")}
+                  className="input input-bordered"
+                  placeholder="Quantity"
+                />
+              </div>
+
+              <input
+                type="datetime-local"
+                defaultValue={selectedTicket.departureDateTime}
+                {...register("departureDateTime")}
+                className="input input-bordered w-full"
+              />
+
+              <input
+                defaultValue={selectedTicket.imageURL}
+                {...register("imageURL")}
+                className="input input-bordered w-full"
+                placeholder="Image URL"
+              />
+
+              <div className="modal-action">
+                <button type="submit" className="btn btn-primary">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    document.getElementById("update_modal").close()
+                  }
+                  className="btn"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </dialog>
     </div>
   );
 };
